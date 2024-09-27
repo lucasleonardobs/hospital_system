@@ -1,0 +1,124 @@
+<div fxFlex fxLayout="row wrap">
+  <form
+    [formGroup]="form"
+    #formDir="ngForm"
+    fxFlex
+    fxLayout="column"
+    (ngSubmit)="onSubmit()"
+  >
+    <h1 style="align-self: flex-start">Edição de Paciente</h1>
+
+    <mat-form-field appearance="outline">
+      <mat-label>CPF</mat-label>
+      <input disabled matInput
+      maxlength="11"
+      minlength="11"
+      [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="cpf" name="cpf" required />
+    </mat-form-field>
+
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input
+          (keypress)="checkAlphaInput($event)"
+          formControlName="name"
+          matInput
+        />
+        <mat-error *ngIf="validateField('name')"
+          >O nome é obrigatório</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Telefone</mat-label>
+        <input
+          matInput
+          maxlength="11"
+          minlength="11"
+          (keypress)="checkNumberInput($event)"
+          formControlName="phone_number"
+        />
+        <mat-error *ngIf="validateField('phone_number')"
+          >O Telefone é obrigatório</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="margin-top: 1rem">
+        <mat-label>Sexo</mat-label>
+        <mat-select
+          formControlName="gender"
+          required
+          #typeSex
+          (selectionChange)="setGender($event)"
+        >
+          <mat-option *ngFor="let sex of genders" [value]="sex.id">
+            {{ sex.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="validateField('phone_number')"
+          >O sexo é obrigatório</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Aniversário</mat-label>
+        <input
+          readonly
+          formControlName="date_of_birth"
+          matInput
+          [matDatepicker]="picker"
+        />
+
+        <mat-datepicker-toggle
+          style="position: absolute; right: 0; top: -29px"
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="validateField('date_of_birth')"
+          >Data de aniversário é obrigatória</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Endereço</mat-label>
+        <input
+          matInput
+          formControlName="address"
+          (keypress)="checkAlphaInput($event)"
+        />
+        <mat-error *ngIf="validateField('address')"
+          >O endereço é obrigatório</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>CEP</mat-label>
+        <input
+          minlength="8"
+          maxlength="8"
+          matInput
+          formControlName="cep"
+          (keypress)="checkNumberInput($event)"
+        />
+        <mat-error *ngIf="validateField('cep')">O CEP é obrigatório</mat-error>
+      </mat-form-field>
+
+      <div class="footer-buttons" style="margin-top: 1rem">
+        <button mat-raised-button color="primary" type="submit">
+          Confirmar
+        </button>
+        <button
+          class="cancel-btn"
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="closeDialog()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

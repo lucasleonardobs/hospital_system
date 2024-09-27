@@ -1,0 +1,152 @@
+<div
+  fxLayout="column"
+  class="main-div-test"
+  fxFill
+  fxLayoutAlign="center center"
+>
+  <div fxFill class="header-container" fxLayout="column">
+    <div fxLayout="column" class="header-buttons" fxLayoutAlign="start start">
+      <h1>Dashboard - Relatórios Médicos
+      </h1>
+      <div fxLayout="row" class="dash-buttons">
+        <button
+          [disabled]="!firstDoctor"
+          mat-raised-button
+          color="primary"
+          (click)="saveReports()"
+          data-cy='report-btn'
+        >
+          Gerar relatório
+        </button>
+        <button
+        class="compare-btn"
+          mat-raised-button
+          color="primary"
+          [disabled]="!firstDoctor"
+          (click)="toggleCompareDoctor()"
+          data-cy="compare-btn"
+        >
+          Comparar
+        </button>
+        <button
+          mat-raised-button
+          class="reset-btn"
+          color="primary"
+          *ngIf="firstDoctor"
+          (click)="resetDoctors()"
+          data-cy='reset-btn'
+        >
+          Resetar
+        </button>
+      </div>
+    </div>
+
+    <mat-form-field class="no-bottom" appearance="outline" data-cy="1st-doctor">
+      <mat-label>Selecione o médico</mat-label>
+      <mat-select
+        (selectionChange)="setFirstDoctor($event)"
+        [(ngModel)]="firstDoctor"
+        [disabled]="!!firstDoctor"
+      >
+        <mat-option *ngFor="let doctor of doctorOptions.first" [value]="doctor">
+          {{ doctor.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      class="no-bottom"
+      appearance="outline"
+      *ngIf="showSecondDoctor"
+      data-cy="2nd-doctor"
+    >
+      <mat-label>Selecione o segundo médico</mat-label>
+      <mat-select
+        (selectionChange)="setSecondDoctor($event)"
+        [(ngModel)]="secondDoctor"
+      >
+        <mat-option
+          *ngFor="let doctor of doctorOptions.second"
+          [value]="doctor"
+        >
+          {{ doctor.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="report-print-text">Hospital System - Relatório médico</div>
+  <div class="charts">
+    <div
+      *ngIf="firstDoctor"
+      class="first-doctor-container"
+      fxLayout="column"
+      fxLayoutAlign="space-evenly center"
+    >
+      <div class="doctor-name">{{ firstDoctor.label }}</div>
+
+      <div class="doctor-chart" fxLayout="row" fxLayoutAlign="center center">
+        <div id="chart-1" fxLayoutAlign="center center">
+          <apx-chart
+            [series]="patientsAvg.first"
+            [chart]="chartOptionsAvgPatientsAvg.chart"
+            [dataLabels]="chartOptionsAvgPatientsAvg.dataLabels"
+            [plotOptions]="chartOptionsAvgPatientsAvg.plotOptions"
+            [yaxis]="chartOptionsAvgPatientsAvg.yaxis"
+            [xaxis]="chartOptionsAvgPatientsAvg.xaxis"
+            [fill]="chartOptionsAvgPatientsAvg.fill"
+            [title]="chartOptionsAvgPatientsAvg.title"
+          ></apx-chart>
+        </div>
+        <div id="chart-2" fxLayoutAlign="center center">
+          <apx-chart
+            [series]="prioritiesAvg.first"
+            [chart]="chartOptionsVisitsAvg.chart"
+            [dataLabels]="chartOptionsVisitsAvg.dataLabels"
+            [plotOptions]="chartOptionsVisitsAvg.plotOptions"
+            [yaxis]="chartOptionsVisitsAvg.yaxis"
+            [xaxis]="chartOptionsVisitsAvg.xaxis"
+            [fill]="chartOptionsVisitsAvg.fill"
+            [title]="chartOptionsVisitsAvg.title"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="second-doctor-container"
+      *ngIf="secondDoctor && showSecondDoctor"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+    >
+      <div class="doctor-name">{{ secondDoctor.label }}</div>
+      <div fxLayout="row" class="doctor-chart" fxLayoutAlign="center center">
+        <div id="chart-3" fxLayoutAlign="center center">
+          <apx-chart
+            [series]="patientsAvg.second"
+            [chart]="chartOptionsAvgPatientsAvg.chart"
+            [dataLabels]="chartOptionsAvgPatientsAvg.dataLabels"
+            [plotOptions]="chartOptionsAvgPatientsAvg.plotOptions"
+            [yaxis]="chartOptionsAvgPatientsAvg.yaxis"
+            [xaxis]="chartOptionsAvgPatientsAvg.xaxis"
+            [fill]="chartOptionsAvgPatientsAvg.fill"
+            [title]="chartOptionsAvgPatientsAvg.title"
+          ></apx-chart>
+        </div>
+
+        <div id="chart-4" fxLayoutAlign="center center">
+          <apx-chart
+            [series]="prioritiesAvg.second"
+            [chart]="chartOptionsVisitsAvg.chart"
+            [dataLabels]="chartOptionsVisitsAvg.dataLabels"
+            [plotOptions]="chartOptionsVisitsAvg.plotOptions"
+            [yaxis]="chartOptionsVisitsAvg.yaxis"
+            [xaxis]="chartOptionsVisitsAvg.xaxis"
+            [fill]="chartOptionsVisitsAvg.fill"
+            [title]="chartOptionsVisitsAvg.title"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

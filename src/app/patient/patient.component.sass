@@ -1,0 +1,110 @@
+mat-table
+    width: 95% !important
+.priority-filter-container
+    font-size: 14px
+    font-weight: 500
+    color:#fff
+    border: 1px solid #dfdfdf
+    font-weight: b
+    width: 80px
+    border-radius: 6px 0 0 6px
+    border-right: 0
+    background: #303f9f
+    padding: 15.5px 0px 12.5px 10px
+   
+
+.table-responsive 
+  display: block
+  width: 100%
+  overflow-x: auto
+  .mat-table 
+      width: 100%
+      max-width: 100%
+      margin-bottom: 1rem
+      display: table
+      border-collapse: collapse
+      margin: 0px
+ 
+  .mat-row,
+  .mat-header-row 
+      display: table-row
+
+.header-container
+    padding: 0 20px
+    mat-error
+        font-size: 12px
+        margin-left: 8px
+
+.register-btn 
+    margin-right:1rem
+    width:10rem
+    align-self: center
+
+.priority-circle-low
+    color: #00ff91
+.priority-circle-medium
+    color: #eeff00
+.priority-circle-high
+    color: #f73e3e 
+
+
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell
+    text-align: center
+    padding: 10px 20px
+
+
+th.mat-header-cell.cdk-header-cell.cdk-column-name.mat-column-name.ng-star-inserted,
+td.mat-cell.cdk-cell.cdk-column-name.mat-column-name.ng-star-inserted
+    text-align: start
+
+
+.search-input
+    width: 100% !important
+    transform: translateY(10px)
+
+
+.priority-search-container
+    width: 100px important
+
+@media (max-width: 1010px)
+    .search-input
+        transform: translateY(5px) !important
+        width: 95vw !important
+@media (max-width: 562px)
+    .priority-search-container
+        flex-direction: column !important
+    .search-input
+        width: 95vw !important
+    .priority-filter-container
+        width: 60px !important
+        font-size: 12px !important
+        padding-right: 6px !important
+ 
+@media (max-width: 1010px) 
+  .header-container
+    margin-top: 15px
+    flex-direction: column !important
+  .priority-filter-container
+    margin: 10px 0
+    border: 1px solid
+  .priority-container
+    width:100%
+  .register-btn
+    width: 100%
+    margin: 0
+  .search-input
+    margin-top: 5px
+    width: 100%
+    transform: translateY(0px)
+
+@media (max-width: 360px)
+    .priority-buttons
+        transform: scale(0.95)
+    
+.patient-served
+    background: #dbd9d3
+    button 
+    td 
+        color: #7b7874
+        

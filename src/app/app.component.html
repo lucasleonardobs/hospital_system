@@ -1,0 +1,68 @@
+<mat-toolbar class="hse-nav-menu" color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+    <span>
+        <button mat-button routerLink="/">{{ title }}</button>
+        <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
+    </span>
+    <span  fxLayout="row" fxShow="false" fxShow.gt-sm>
+        
+        <button mat-button routerLink="/patients-list" name="btn-patient-list">
+            <mat-icon>person</mat-icon>
+            Lista de Pacientes
+        </button>
+        <button mat-button routerLink="/waiting-list" name="btn-patient">
+            <mat-icon>list icon</mat-icon>
+            Fila de Espera
+        </button>
+        <button mat-button routerLink="/medical-exams" name="btn-exams">
+            <mat-icon>medical_services</mat-icon>
+            Marcação de Exames
+        </button>
+        <button mat-button routerLink="/reports" name="btn-reports">
+            <mat-icon>table_view</mat-icon>
+            Relatório Médicos
+        </button>
+    </span>
+
+    <span  fxLayout="row" fxShow="false" fxShow.gt-sm>  
+        <button mat-button routerLink="/login" *ngIf="!isAuthenticated">
+            <mat-icon>power_settings_new</mat-icon>
+            Login
+        </button>
+        <button mat-button *ngIf="isAuthenticated" (click)="logout()" name = 'logout'>
+            <mat-icon>exit_to_app</mat-icon>
+            Logout
+        </button>
+    </span>  
+    <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-menu x-position="before" #menu="matMenu">
+    <button mat-menu-item routerLink="/">
+      <mat-icon>home</mat-icon>
+      Home
+    </button>
+    <button mat-menu-item routerLink="/patients-list">
+        <mat-icon>list icon</mat-icon>
+        Lista de Pacientes
+    </button>
+    <button mat-menu-item routerLink="/waiting-list">
+        <mat-icon>person</mat-icon>
+        Fila de Espera
+    </button>
+    <button mat-menu-item routerLink="/medical-exams">
+        <mat-icon>medical_services</mat-icon>
+        Marcação de Exames
+    </button>
+    <button mat-menu-item routerLink="/reports">
+        <mat-icon>table_view</mat-icon>
+        Relatório Médicos
+    </button>
+    <button mat-menu-item *ngIf="isAuthenticated" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Logout
+    </button>
+</mat-menu>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,121 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div
+    fxFill
+    class="header-container"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openCreatePatientDialog()"
+      class="register-btn"
+      name="btn-add-patient"
+    >
+      Cadastrar
+    </button>
+
+    <mat-form-field class="search-input" appearance="outline">
+      <mat-label>Pesquisar paciente por CPF</mat-label>
+      <input
+        maxlength="11"
+        (keypress)="checkNumberInput($event)"
+        [(ngModel)]="searchByCpf"
+        placeholder="Pesquisar por CPF"
+        matInput
+        type="search"
+      />
+      <button
+        mat-button
+        matSuffix
+        *ngIf="searchByCpf"
+        (click)="searchPatientByCpf()"
+        aria-label="search"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button
+        mat-button
+        matSuffix
+        *ngIf="searchByCpf || patientFound"
+        (click)="cleanSearch()"
+        aria-label="search"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-error *ngIf="searchByCpf">{{ searchError }}</mat-error>
+  </div>
+  <div class="table-responsive" *ngIf="dataSource?.length > 0">
+    <table
+      mat-table
+      fxFlexFill
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+    >
+      <!-- CPF Column -->
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef>CPF</th>
+        <td mat-cell *matCellDef="let element">{{ cpfMask(element.cpf) }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>NOME</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- Date of Bith Column -->
+      <ng-container matColumnDef="date_of_birth">
+        <th mat-header-cell *matHeaderCellDef>DATA DE NASCIMENTO</th>
+        <td mat-cell *matCellDef="let element">
+          {{ formatDate({ date: element.date_of_birth }) }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-raised-button
+            color="primary"
+            [matMenuTriggerFor]="menu"
+            data-cy="acoes"
+          >
+            Ações
+          </button>
+          <mat-menu #menu="matMenu">
+            <button
+              mat-menu-item
+              (click)="openViewPatientDialog(element)"
+              data-cy="view"
+            >
+              Visualizar
+            </button>
+            <button
+              mat-menu-item
+              (click)="openEditPatientDialog(element)"
+              data-cy="edit"
+            >
+              Editar
+            </button>
+            <button
+              mat-menu-item
+              (click)="openDeletePatientDialog({ cpf: element.cpf })"
+              data-cy="delete"
+            >
+              Deletar
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <div class="empty-list" *ngIf="!loading && !dataSource?.length">
+    <p>Não há pacientes cadastrados.</p>
+  </div>
+</div>

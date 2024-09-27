@@ -1,0 +1,27 @@
+<h1>Ficha do Paciente</h1>
+
+<div class="container" cy-data="view-dialog">
+
+    <mat-label>Nome</mat-label>
+    <p>{{patient.name}}</p>
+
+    <mat-label>CPF</mat-label>
+    <p>{{cpfMask(patient.cpf)}}</p>
+
+    <mat-label>Data de Nascimento</mat-label>
+    <p>{{formatDate(patient.date_of_birth)}}</p>
+    
+    <mat-label>Sexo</mat-label>
+    <p>{{genders[patient.gender]}}</p>
+    
+    <mat-label>Cep</mat-label>
+    <p>{{cepMask(patient.cep)}}</p>
+
+    <mat-label>Address</mat-label>
+    <p>{{patient.address}}</p>
+
+    <mat-label>Telefone</mat-label>
+    <p>{{phoneMask(patient.phone_number)}}</p>
+
+
+</div>

@@ -1,0 +1,164 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div
+    fxFill
+    class="header-container"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openCreatePatientDialog()"
+      class="register-btn"
+      cy-data="register-btn"
+    >
+      Cadastrar
+    </button>
+
+    <div
+      class="priority-search-container"
+      fxFlex="95"
+      fxLayoutAlign="center center"
+    >
+      <div fxLayout="row" class="priority-buttons" fxLayoutAlign="center center">
+        <div class="priority-filter-container">Prioridades</div>
+        <mat-button-toggle-group
+          value="{{ patientFound?.priority }}"
+          (change)="setPriority($event)"
+          style="margin-right: 14px"
+          name="fontStyle"
+          aria-label="Font Style"
+        >
+          <mat-button-toggle (click)="refreshData()" value="-1"
+            >Todas</mat-button-toggle
+          >
+          <mat-button-toggle value="0">Baixa</mat-button-toggle>
+          <mat-button-toggle value="1">Média</mat-button-toggle>
+          <mat-button-toggle value="2">Alta</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <mat-form-field class="search-input" appearance="outline">
+        <mat-label>Pesquisar paciente por CPF</mat-label>
+        <input
+          maxlength="11"
+          (keypress)="checkNumberInput($event)"
+          [(ngModel)]="searchByCpf"
+          placeholder="Pesquisar por CPF"
+          matInput
+          type="search"
+        />
+        <button
+          mat-button
+          matSuffix
+          *ngIf="searchByCpf"
+          (click)="searchPatientByCpf()"
+          aria-label="search"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+
+        <button
+          mat-button
+          matSuffix
+          *ngIf="searchByCpf || patientFound"
+          (click)="cleanSearch()"
+          aria-label="search"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-error *ngIf="searchByCpf">{{ searchError }}</mat-error>
+    </div>
+  </div>
+  <div class="table-responsive" *ngIf="dataSource?.length > 0" >
+    <table
+      mat-table
+      fxFlexFill
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+    >
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}º</td>
+      </ng-container>
+      <!-- CPF Column -->
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef>CPF</th>
+        <td mat-cell *matCellDef="let element">{{ cpfMask(element?.patient_cpf) }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>NOME</th>
+        <td mat-cell *matCellDef="let element">{{ element.patient?.name }}</td>
+      </ng-container>
+
+      <!-- priority Column -->
+      <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef>PRIORIDADE</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon
+            [ngClass]="{
+              'priority-circle-low': element.priority === 0,
+              'priority-circle-medium': element.priority === 1,
+              'priority-circle-high': element.priority === 2
+            }"
+            >circle</mat-icon
+          >
+        </td>
+      </ng-container>
+
+      <!-- Served Column -->
+      <ng-container matColumnDef="served">
+        <th mat-header-cell *matHeaderCellDef>ATENDIDO</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-slide-toggle
+            [disabled]="element.attended"
+            color="primary"
+            (change)="setPatientAttended(element.patient_cpf)"
+            [(ngModel)]="element.attended"
+          ></mat-slide-toggle>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-raised-button
+            color="primary"
+            [matMenuTriggerFor]="menu"
+            data-cy="acoes"
+          >
+            Ações
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openViewPatientDialog(element)">
+              Visualizar
+            </button>
+            <button
+              mat-menu-item
+              (click)="openDeletePatientDialog(element.patient_cpf)"
+            >
+              Deletar
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        [ngClass]="{ 'patient-served': row.attended }"
+        *matRowDef="let row; let i = dataIndex; columns: displayedColumns"
+      ></tr>
+    </table>
+  </div>
+  <div class="empty-list" *ngIf="!loading && !dataSource?.length" >
+    <p>
+      Não há pacientes cadastrados na fila de espera.
+    </p>
+  </div>
+</div>

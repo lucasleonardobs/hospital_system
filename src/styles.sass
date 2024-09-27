@@ -1,0 +1,26 @@
+@import '~@angular/material/theming'
+@include mat-core()
+
+$custom-app-primary: mat-palette($mat-indigo, 700)
+$custom-app-secondary: mat-palette($mat-blue)
+
+$custom-theme: mat-light-theme($custom-app-primary, $custom-app-secondary)
+@include angular-material-theme($custom-theme)
+
+
+
+h1
+    text-align: center
+
+body
+    margin: 0
+    padding: 0
+
+.empty-list
+    height: 50vh
+    text-align: center
+    font-size: 16px
+    padding: 2rem
+    display: flex
+    justify-content: center
+    align-items: center

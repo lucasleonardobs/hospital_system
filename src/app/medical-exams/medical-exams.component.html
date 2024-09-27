@@ -1,0 +1,120 @@
+<div fxLayout="column" fxFill fxLayoutAlign="center center">
+  <div
+    fxFill
+    class="header-container"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openCreateMedicalExamDialog()"
+      class="register-btn"
+      data-cy="new-exam-btn"
+    >
+      Marcar Exame
+    </button>
+    <mat-form-field class="search-input" appearance="outline">
+      <mat-label>Pesquisar paciente por CPF</mat-label>
+      <input
+        maxlength="11"
+        (keypress)="checkNumberInput($event)"
+        [(ngModel)]="searchByCpf"
+        placeholder="Pesquisar por CPF"
+        matInput
+        type="search"
+      />
+      <button
+        mat-button
+        matSuffix
+        *ngIf="searchByCpf"
+        (click)="searchPatientByCpf()"
+        aria-label="search"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button
+        mat-button
+        matSuffix
+        *ngIf="searchByCpf || patientFound"
+        (click)="cleanSearch()"
+        aria-label="search"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-error *ngIf="searchByCpf">{{ searchError }}</mat-error>
+  </div>
+
+  <div class="table-responsive" *ngIf="dataSource?.length > 0">
+    <table mat-table fxFill [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- CPF Column -->
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef>CPF</th>
+        <td mat-cell *matCellDef="let element">{{ cpfMask(element.patient_cpf) }}</td>
+      </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let element">{{ element.patient.name }}</td>
+      </ng-container>
+
+      <!-- Schedule Column -->
+      <ng-container matColumnDef="schedule_date">
+        <th mat-header-cell *matHeaderCellDef>Data/Horário</th>
+        <td mat-cell *matCellDef="let element">
+          {{ formatDate(element.scheduled_at) }}
+        </td>
+      </ng-container>
+
+      <!-- Exam Column -->
+      <ng-container matColumnDef="exam_type">
+        <th mat-header-cell *matHeaderCellDef>Exame</th>
+        <td mat-cell *matCellDef="let element">{{ element.exam }}</td>
+      </ng-container>
+
+      <!-- Doctor Column -->
+      <ng-container matColumnDef="doctor_name">
+        <th mat-header-cell *matHeaderCellDef>Doutor</th>
+        <td mat-cell *matCellDef="let element">{{ element.doctor_name }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-raised-button
+            color="primary"
+            [matMenuTriggerFor]="menu"
+            data-cy="acoes"
+          >
+            Ações
+          </button>
+          <mat-menu #menu="matMenu">
+            <button
+              mat-menu-item
+              (click)="openViewMedicalExamDialog(element)"
+              data-cy="view"
+            >
+              Visualizar
+            </button>
+            <button
+              mat-menu-item
+              (click)="openDeleteMedicalExamDialog(element.patient_cpf)"
+              data-cy="delete"
+            >
+              Deletar
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <div class="empty-list" *ngIf="!loading && !dataSource?.length">
+    <p>Não há exames marcados.</p>
+  </div>
+</div>

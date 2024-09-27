@@ -1,0 +1,41 @@
+<div class='login-container' fxLayoutAlign="center center" >
+    <mat-card class='login-card' >
+        <div class="hospital-text"> Hospital System</div>
+        <mat-toolbar color="primary">Entre com sua conta</mat-toolbar>
+        <mat-card-content>
+            <form #loginForm="ngForm" fxLayout="column" fxLayoutAlign="stretch" (ngSubmit)="onSubmit()">
+                <mat-error *ngIf="!loginValid">
+                    O email ou a senha não foram reconhecidos.
+                </mat-error>
+                
+                <mat-form-field>
+                    <mat-label>Digite seu e-mail</mat-label>
+
+                    <input matInput placeholder="Email" type="email" [(ngModel)]="email" name="email" required>
+
+                    <mat-error>
+                        Por favor, digite um endereço de e-mail válido.
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Digite sua senha</mat-label>
+
+                    <input matInput placeholder="Senha" type="password" [(ngModel)]="password" name="password" [type]="hide_password ? 'password' : 'text'" required>
+                    
+                    <button mat-icon-button matSuffix (click)="hide_password = !hide_password" [attr.aria-label]="'hide_password password'" [attr.aria-pressed]="hide_password">
+                      <mat-icon>{{hide_password ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+
+                    <mat-error>
+                        Por favor, digite uma senha válida.
+                    </mat-error>
+                </mat-form-field>
+                
+                <button mat-raised-button color="primary" class="login-btn" [disabled]="!loginForm.form.valid" >
+                    Login
+                </button>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

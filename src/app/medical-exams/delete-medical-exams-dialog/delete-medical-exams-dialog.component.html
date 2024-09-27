@@ -1,0 +1,20 @@
+<div>
+    <h3>
+        Deletar o agendamento do paciente com CPF: {{cpfMask(cpf)}}?
+    </h3>
+    <div class="footer-buttons" style="margin-top: 1rem">
+        <button mat-raised-button color="primary" type="submit" (click)="deletePatient()">
+          Confirmar
+        </button>
+        <button
+          class="cancel-btn"
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="closeDialog()"
+        >
+          Cancelar
+        </button>
+      </div>
+    
+</div>

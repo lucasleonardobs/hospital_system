@@ -1,0 +1,55 @@
+mat-table
+    width: 95% !important
+
+.table-responsive 
+  display: block
+  width: 100%
+  overflow-x: auto
+  .mat-table 
+      width: 100%
+      max-width: 100%
+      margin-bottom: 1rem
+      display: table
+      border-collapse: collapse
+      margin: 0px
+ 
+  .mat-row,
+  .mat-header-row 
+      display: table-row
+
+.header-container 
+    padding:0.3rem
+
+.register-btn 
+    margin-right:1rem
+    width:10rem
+    align-self: center
+
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell
+    text-align: center
+    padding: 10px 20px
+
+    
+.search-input
+    width: 100%
+    transform: translateY(10px)
+
+.header-container
+    padding: 0 20px
+    mat-error
+        font-size: 12px
+        margin-left: 8px
+
+@media (max-width: 572px) 
+  .header-container
+    margin-top: 15px
+    flex-direction: column !important
+    .register-btn
+          width: 100%
+          margin: 0
+    .search-input
+          margin-top:10px
+          width: 100%
+          transform: translateY(0px)
+

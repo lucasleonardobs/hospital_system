@@ -1,0 +1,84 @@
+<div fxFlex fxLayout="row wrap">
+  <form
+    fxFlex
+    #patientRegisterForm="ngForm"
+    fxLayout="column"
+    (ngSubmit)="onSubmit()"
+  >
+    <h1 style="align-self: flex-start">Edição de Paciente</h1>
+
+    <div style="padding-top: 30px">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput [(ngModel)]="name" name="name" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>CPF</mat-label>
+        <input disabled matInput [(ngModel)]="cpf" name="cpf" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Telefone</mat-label>
+        <input
+          matInput
+          [(ngModel)]="phone_number"
+          name="phone_number"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="margin-top: 1rem">
+        <mat-label>Sexo</mat-label>
+        <mat-select
+          [(value)]="gender"
+          #typeSex
+          (selectionChange)="setSelectedSexId($event)"
+        >
+          <mat-option *ngFor="let sex of sexOptions" [value]="sex.id">
+            {{ sex.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Aniversário</mat-label>
+        <input
+          readonly
+          [(ngModel)]="date_of_birth"
+          matInput
+          [matDatepicker]="picker"
+          [ngModelOptions]="{ standalone: true }"
+        />
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Endereço</mat-label>
+        <input matInput [(ngModel)]="address" name="address" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>CEP</mat-label>
+        <input matInput [(ngModel)]="cep" name="cep" />
+      </mat-form-field>
+
+      <div class="footer-buttons" style="margin-top: 1rem">
+        <button mat-raised-button color="primary" type="submit">
+          Confirmar
+        </button>
+        <button
+          class="cancel-btn"
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="closeDialog()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

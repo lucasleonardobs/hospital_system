@@ -1,0 +1,32 @@
+<h1>Ficha do Paciente</h1>
+
+<div class="container">
+
+    <mat-label>Nome</mat-label>
+    <p>{{patientData.patient.name}}</p>
+    
+    <mat-label>CPF</mat-label>
+    <p>{{cpfMask(patientData.patient_cpf)}}</p>
+
+    <div>
+        <mat-label  >Prioridade</mat-label>
+        <p>{{priorityValue[patientData.priority]}}</p> 
+    </div>
+
+    <mat-label>Sexo</mat-label>
+    <p>{{genders[patientData.patient.gender]}}</p>
+
+    <mat-label>Data de Nascimento</mat-label>
+    <p>{{formatDate(patientData.patient.date_of_birth)}}</p>
+
+    <mat-label>Telefone</mat-label>
+    <p>{{phoneMask(patientData.patient.phone_number)}}</p>
+
+    <mat-label>Endereço</mat-label>
+    <p>{{patientData.patient.address}}</p>
+
+    <mat-label>CEP</mat-label>
+    <p>{{cepMask(patientData.patient.cep)}}</p>
+
+
+</div>

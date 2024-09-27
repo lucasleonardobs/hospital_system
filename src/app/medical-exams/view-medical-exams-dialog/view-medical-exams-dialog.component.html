@@ -1,0 +1,27 @@
+<h1>Ficha do Paciente</h1>
+
+<div class="container">
+
+    <mat-label>Nome</mat-label>
+    <p>{{name}}</p>
+
+    <mat-label>CPF</mat-label>
+    <p>{{cpfMask(cpf)}}</p>
+
+    <mat-label>Data de Nascimento</mat-label>
+    <p>{{formatDate({date: date_of_birth})}}</p>
+
+
+    <mat-label>Horário/Data</mat-label>
+    <p>{{formatDate({date: scheduled_date, showTime: true})}}</p>
+
+    <mat-label>Telefone</mat-label>
+    <p>{{phoneMask(phone_number)}}</p>
+
+    <mat-label>Médico</mat-label>
+    <p>{{doctor_name}}</p>
+    
+    <mat-label>Exame</mat-label>
+    <p>{{exam_type}}</p>
+
+</div>

@@ -1,0 +1,67 @@
+mat-table
+    width: 95% !important
+
+.table-responsive 
+  display: block
+  width: 100%
+  overflow-x: auto
+  .mat-table 
+      width: 100%
+      max-width: 100%
+      margin-bottom: 1rem
+      display: table
+      border-collapse: collapse
+      margin: 0px
+ 
+  .mat-row,
+  .mat-header-row 
+      display: table-row
+
+.header-container 
+    padding:0.3rem
+    mat-error
+        font-size: 12px
+        margin-left: 8px
+
+.register-btn 
+    margin-right:1rem
+    width:10rem
+    align-self: center
+
+
+
+mat-column-name 
+     text-align: center
+
+mat-cell-name
+    text-align: center
+
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell
+    text-align: center
+    padding: 10px 20px
+
+
+th.mat-header-cell.cdk-header-cell.cdk-column-name.mat-column-name.ng-star-inserted,
+td.mat-cell.cdk-cell.cdk-column-name.mat-column-name.ng-star-inserted
+    text-align: start
+
+
+.search-input
+    width: 100%
+    transform: translateY(10px)
+
+.header-container
+    padding: 0 20px
+
+@media (max-width: 690px) 
+  .header-container
+    margin-top: 15px
+    flex-direction: column !important
+    .register-btn
+          width: 100%
+          margin: 0
+    .search-input
+          margin-top: 5px
+          width: 100%
+          transform: translateY(0px)
